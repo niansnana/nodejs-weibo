@@ -11,6 +11,7 @@ const redisStore = require('koa-redis')
 const { REDIS_CONF } = require('./conf/db')
 
 const { isProd } = require('./utils/env')
+const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
 const index = require('./routes/index')
 const userViewRouter = require('./routes/view/user')
@@ -39,7 +40,7 @@ app.use(views(__dirname + '/views', {
 }))
 
 // 配置 redis-session
-app.keys = ['NiAn@#123!...'] // 对session进行加密
+app.keys = [SESSION_SECRET_KEY] // 对session进行加密
 app.use(session({
   key: 'weibo.sid', // session name 默认是 koa.sid
   prefix: 'weibo:sess:', // redis-key 的前缀，默认是 koa:sess:
