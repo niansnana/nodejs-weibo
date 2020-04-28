@@ -24,7 +24,7 @@ async function getUserInfo (userName, password) {
     attributes: ['id', 'userName', 'nickName', 'picture', 'city'], // 需要查的字段（如果不写，则查询所有字段
     where: whereOpt
   })
-  if (result === null) {
+  if (result == null) {
     return result
   }
   // 格式化

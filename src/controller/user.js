@@ -5,7 +5,12 @@
  */
 const { getUserInfo, createUser } = require('../services/user')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
-const { registerUserNameNotExistInfo, registerUserNameExistInfo, registerFailInfo } = require('../model/ErrorModel')
+const {
+  registerUserNameNotExistInfo,
+  registerUserNameExistInfo,
+  registerFailInfo,
+  loginFailInfo
+} = require('../model/ErrorModel')
 const doCrypto = require('../utils/cryp')
 /**
  * 用户名是否存在
@@ -47,8 +52,27 @@ async function register ({ userName, password, gender }) {
     return new ErrorModel(registerFailInfo)
   }
 }
+/**
+ * 登录接口
+ * @param {Object} ctx koa2 cts
+ * @param {String} userName 用户名
+ * @param {String} password 密码
+ */
+async function login (ctx, userName, password) {
+  // 获取用户信息
+  const userInfo = await getUserInfo(userName, doCrypto(password))
+  if (!userInfo) {
+    return new ErrorModel(loginFailInfo)
+  }
+  // 登录成功
+  if (ctx.session.userInfo == null) {
+    ctx.session.userInfo = userInfo
+  }
+  return new SuccessModel()
+}
 
 module.exports = {
   isExist,
-  register
+  register,
+  login
 }
