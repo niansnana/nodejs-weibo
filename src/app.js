@@ -9,17 +9,13 @@ const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
 
 const { REDIS_CONF } = require('./conf/db')
-
 const { isProd } = require('./utils/env')
-// <<<<<<< HEAD
+const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
 const index = require('./routes/index')
 const userViewRouter = require('./routes/view/user')
-// =======
-const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
 const UserAPIRouter = require('./routes/api/user')
-// >>>>>>> feature-login
 const errorViewRouter = require('./routes/view/error')
 
 // error handler
@@ -44,7 +40,6 @@ app.use(views(__dirname + '/views', {
 }))
 
 // 配置 redis-session
-app.keys = ['NiAn@#123!...'] // 对session进行加密
 app.keys = [SESSION_SECRET_KEY] // 对session进行加密
 app.use(session({
   key: 'weibo.sid', // session name 默认是 koa.sid
@@ -61,7 +56,6 @@ app.use(session({
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 // 界面路由
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 // 接口路由
