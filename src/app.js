@@ -7,15 +7,20 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
+const koaStatic = require('koa-static')
+const path = require('path')
 
 const { REDIS_CONF } = require('./conf/db')
 const { isProd } = require('./utils/env')
 const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
+// 路由部分
+// 页面路由
 const index = require('./routes/index')
 const userViewRouter = require('./routes/view/user')
-
-const UserAPIRouter = require('./routes/api/user')
+// 接口路由
+const utilsAPIRouter = require('./routes/api/utils')
+const userAPIRouter = require('./routes/api/user')
 const errorViewRouter = require('./routes/view/error')
 
 // error handler
@@ -33,7 +38,8 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(__dirname + '/public'))
+app.use(koaStatic(__dirname + '/public'))
+app.use(koaStatic(path.join(__dirname, '..', 'uploadFiles')))
 
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
@@ -59,7 +65,8 @@ app.use(index.routes(), index.allowedMethods())
 // 界面路由
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 // 接口路由
-app.use(UserAPIRouter.routes(), UserAPIRouter.allowedMethods())
+app.use(userAPIRouter.routes(), userAPIRouter.allowedMethods())
+app.use(utilsAPIRouter.routes(), utilsAPIRouter.allowedMethods())
 // 其他路由
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()) // 注意 404 路由放在最下面
 
