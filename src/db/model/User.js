@@ -1,5 +1,4 @@
 /**
- * 
  * @description 创建用户表
  * @author niansnana
  */
