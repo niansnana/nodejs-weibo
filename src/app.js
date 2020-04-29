@@ -20,6 +20,7 @@ const blogViewRouter = require('./routes/view/blog')
 // 接口路由
 const utilsAPIRouter = require('./routes/api/utils')
 const userAPIRouter = require('./routes/api/user')
+const blogHomeAPIRouter = require('./routes/api/blog-home')
 const errorViewRouter = require('./routes/view/error')
 
 // error handler
@@ -65,6 +66,7 @@ app.use(blogViewRouter.routes(), blogViewRouter.allowedMethods())
 // 接口路由
 app.use(userAPIRouter.routes(), userAPIRouter.allowedMethods())
 app.use(utilsAPIRouter.routes(), utilsAPIRouter.allowedMethods())
+app.use(blogHomeAPIRouter.routes(), blogHomeAPIRouter.allowedMethods())
 // 其他路由
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()) // 注意 404 路由放在最下面
 
