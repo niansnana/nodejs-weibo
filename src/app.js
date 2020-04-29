@@ -14,10 +14,9 @@ const { REDIS_CONF } = require('./conf/db')
 const { isProd } = require('./utils/env')
 const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
-// 路由部分
 // 页面路由
-const index = require('./routes/index')
 const userViewRouter = require('./routes/view/user')
+const blogViewRouter = require('./routes/view/blog')
 // 接口路由
 const utilsAPIRouter = require('./routes/api/utils')
 const userAPIRouter = require('./routes/api/user')
@@ -60,10 +59,9 @@ app.use(session({
   })
 }))
 
-// routes
-app.use(index.routes(), index.allowedMethods())
 // 界面路由
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
+app.use(blogViewRouter.routes(), blogViewRouter.allowedMethods())
 // 接口路由
 app.use(userAPIRouter.routes(), userAPIRouter.allowedMethods())
 app.use(utilsAPIRouter.routes(), utilsAPIRouter.allowedMethods())
