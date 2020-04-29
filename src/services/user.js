@@ -65,11 +65,11 @@ async function deleteUser (userName) {
  * @param {Object} param1 条件 { userName, password }
  */
 async function updateUser (
-  { newPasswod, newNickName, newCity, newPicture },
+  { newPassword, newNickName, newCity, newPicture },
   { userName, password }) {
   const updateData = {}
-  if (newPasswod) {
-    updateData.passwod = newPasswod
+  if (newPassword) {
+    updateData.password = newPassword
   }
   if (newNickName) {
     updateData.nickName = newNickName
@@ -85,7 +85,7 @@ async function updateUser (
     userName
   }
   if (password) {
-    updateData.passwod = password
+    updateData.password = password
   }
   // 更新数据
   const result = await User.update(updateData, {
