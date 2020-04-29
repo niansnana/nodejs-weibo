@@ -2,6 +2,7 @@
  * @description blog-home controller
  * @author niansnana
  */
+const xss = require('xss')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { createBlogFailInfo } = require('../model/ErrorModel')
 const { createBlog } = require('../services/blog')
@@ -13,7 +14,11 @@ const { createBlog } = require('../services/blog')
  */
 async function create ({ userId, content, image }) {
   try {
-    const result = createBlog({ userId, content, image })
+    const result = createBlog({
+      userId,
+      content: xss(content),
+      image
+    })
     if (result) {
       return new SuccessModel(result)
     }
