@@ -4,7 +4,7 @@
  * @author niansnana
  */
 const router = require('koa-router')()
-const { isExist, register, login, deleteCurUser } = require('../../controller/user')
+const { isExist, register, login, deleteCurUser, changeInfo } = require('../../controller/user')
 const userValidate = require('../../validator/user')
 const { genValidator } = require('../../middlewares/validator')
 const { isTest } = require('../../utils/env')
@@ -18,17 +18,20 @@ router.post('/register', genValidator(userValidate), async (ctx, next) => {
   // 调用controller
   ctx.body = await register({ userName, password, gender })
 })
+
 // 用户名是否存在
 router.post('/isExist', async (ctx, next) => {
   const { userName } = ctx.request.body
   // 调用controller
   ctx.body = await isExist(userName)
 })
+
 // 登录接口
 router.post('/login', async (ctx, next) => {
   const { userName, password } = ctx.request.body
   ctx.body = await login(ctx, userName, password)
 })
+
 // 删除用户
 router.post('/delete', loginCheck, async (ctx, next) => {
   if (isTest) {
@@ -37,4 +40,11 @@ router.post('/delete', loginCheck, async (ctx, next) => {
     ctx.body = await deleteCurUser(userName)
   }
 })
+
+// 修改用户xinx
+router.patch('/changeInfo', loginCheck, genValidator(userValidate), async (ctx, next) => {
+  const { nickName, city, picture } = ctx.request.body
+  ctx.body = await changeInfo(ctx, { nickName, city, picture })
+})
+
 module.exports = router
