@@ -17,7 +17,7 @@ async function loginCheck (ctx, next) {
     return
   }
   // 未登录
-  return ErrorModel(loginCheckFailInfo)
+  return new ErrorModel(loginCheckFailInfo)
 }
 /**
  * 页面 登录验证
