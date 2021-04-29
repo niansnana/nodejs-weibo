@@ -1,0 +1,38 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: ajv
+    versions:
+    - 7.0.3
+    - 7.0.4
+    - 7.1.0
+    - 7.1.1
+    - 7.2.1
+    - 7.2.3
+    - 8.0.1
+    - 8.0.3
+    - 8.0.5
+    - 8.1.0
+  - dependency-name: y18n
+    versions:
+    - 4.0.1
+    - 4.0.2
+  - dependency-name: sequelize
+    versions:
+    - 6.5.0
+    - 6.5.1
+    - 6.6.1
+  - dependency-name: urijs
+    versions:
+    - 1.19.5
+  - dependency-name: lodash
+    versions:
+    - 4.17.20
+  - dependency-name: ejs
+    versions:
+    - 3.1.5
